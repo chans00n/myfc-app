@@ -2,6 +2,10 @@ import { getCurrentUser } from '@/lib/auth'
 import DashboardLayout from '@/components/layouts/DashboardLayout'
 import { createServerSupabaseClient } from '@/lib/auth'
 import { formatDate } from '@/lib/utils'
+import Image from 'next/image'
+
+// Base64 encoded placeholder image for workouts
+const DEFAULT_WORKOUT_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiNmMGYwZjAiIC8+CgogIDwhLS0gRHVtYmJlbGwgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAwLCAzMDApIj4KICAgIDwhLS0gRHVtYmJlbGwgYmFyIC0tPgogICAgPHJlY3QgeD0iLTE1MCIgeT0iLTEwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwIiByeD0iNSIgcnk9IjUiIGZpbGw9IiM2NjY2NjYiIC8+CgogICAgPCEtLSBEdW1iYmVsbCB3ZWlnaHRzIC0tPgogICAgPGcgZmlsbD0iIzQ0NDQ0NCI+CiAgICAgIDxjaXJjbGUgY3g9Ii0xNzAiIGN5PSIwIiByPSI0MCIgLz4KICAgICAgPGNpcmNsZSBjeD0iMTcwIiBjeT0iMCIgcj0iNDAiIC8+CiAgICA8L2c+CiAgPC9nPgoKICA8IS0tIFRleHQgLS0+CiAgPHRleHQgeD0iNDAwIiB5PSI0MDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzY2NjY2NiI+V29ya291dCBJbWFnZTwvdGV4dD4KPC9zdmc+'
 
 async function getWorkouts() {
   const supabase = createServerSupabaseClient()
@@ -41,8 +45,12 @@ export default async function WorkoutsPage() {
               <div className="relative pb-48">
                 <img
                   className="absolute h-full w-full object-cover"
-                  src={workout.thumbnail_url}
+                  src={workout.thumbnail_url || DEFAULT_WORKOUT_IMAGE}
                   alt={workout.title}
+                  onError={(e) => {
+                    // Fallback if the image fails to load
+                    e.currentTarget.src = DEFAULT_WORKOUT_IMAGE;
+                  }}
                 />
               </div>
               <div className="p-6">

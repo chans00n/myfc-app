@@ -12,6 +12,10 @@ export async function POST(req: Request) {
     return new NextResponse('No signature', { status: 400 })
   }
 
+  if (!stripe) {
+    return new NextResponse('Stripe is not initialized', { status: 500 })
+  }
+
   try {
     const event = stripe.webhooks.constructEvent(
       body,

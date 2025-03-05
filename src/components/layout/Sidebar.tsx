@@ -5,7 +5,7 @@ import {
   ChartBarIcon,
   Cog6ToothIcon,
   UsersIcon
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/24/solid'
 
 const routes = [
   {

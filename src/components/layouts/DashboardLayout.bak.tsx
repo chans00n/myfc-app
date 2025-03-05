@@ -56,9 +56,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   useEffect(() => {
     const themeParam = searchParams.get('theme')
     
-    // Only update if the theme parameter has changed
-    if (themeParam !== theme) {
-      setTheme(themeParam)
+    // Only update if the theme parameter has changed and is not null
+    if (themeParam !== null && themeParam !== theme) {
+      setTheme(themeParam as 'light' | 'dark' | 'system')
     }
   }, [searchParams, setTheme, theme])
 
@@ -190,8 +190,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, [profileMenuRef, mobileProfileMenuRef])
 
   // Theme toggle function
-  const handleThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
-    setTheme(newTheme)
+  const handleThemeChange = () => {
+    setTheme(isDarkMode ? 'light' : 'dark')
   }
 
   const handleSignOut = async () => {

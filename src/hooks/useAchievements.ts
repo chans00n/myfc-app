@@ -90,7 +90,7 @@ export function useAchievements() {
 
   // Get user's total achievement points
   const getTotalPoints = () => {
-    return userAchievements.reduce((total, ua) => total + (ua.achievements?.points || 0), 0)
+    return userAchievements.reduce((total, ua) => total + (ua.achievements?.reward_points || 0), 0)
   }
 
   // Get achievements that the user hasn't earned yet

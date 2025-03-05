@@ -8,6 +8,7 @@ type ThemeContextType = {
   theme: Theme
   isDarkMode: boolean
   setTheme: (theme: Theme) => void
+  toggleDarkMode: () => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -48,6 +49,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyTheme(newTheme)
   }
 
+  // Toggle between light and dark mode
+  const toggleDarkMode = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark'
+    setTheme(newTheme)
+  }
+
   // Initialize theme on mount
   useEffect(() => {
     // Check URL for theme parameter
@@ -82,7 +89,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme])
 
   return (
-    <ThemeContext.Provider value={{ theme, isDarkMode, setTheme }}>
+    <ThemeContext.Provider value={{ theme, isDarkMode, setTheme, toggleDarkMode }}>
       {children}
     </ThemeContext.Provider>
   )

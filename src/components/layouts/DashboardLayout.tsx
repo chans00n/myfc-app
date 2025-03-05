@@ -287,71 +287,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
             <div className="mt-10 px-4">
               <div className="border-t border-gray-200 dark:border-gray-800 pt-4">
-                <div className="relative">
-                  <button
-                    type="button"
-                    className="flex items-center rounded-full bg-white dark:bg-gray-800 p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    onClick={() => setThemeMenuOpen(!themeMenuOpen)}
-                  >
-                    <span className="sr-only">Open theme menu</span>
-                    {theme === 'dark' ? (
-                      <MoonIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-                    ) : theme === 'light' ? (
-                      <SunIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-                    ) : (
-                      <ComputerDesktopIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
-                    )}
-                  </button>
-                  
-                  {themeMenuOpen && (
-                    <div
-                      ref={mobileMenuRef}
-                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    >
-                      <button
-                        onClick={() => setTheme('light')}
-                        className={`flex w-full items-center px-4 py-2 text-sm ${
-                          theme === 'light' 
-                            ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' 
-                            : 'text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        <SunIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                        Light
-                      </button>
-                      <button
-                        onClick={() => setTheme('dark')}
-                        className={`flex w-full items-center px-4 py-2 text-sm ${
-                          theme === 'dark' 
-                            ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' 
-                            : 'text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        <MoonIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                        Dark
-                      </button>
-                      <button
-                        onClick={() => setTheme('system')}
-                        className={`flex w-full items-center px-4 py-2 text-sm ${
-                          theme === 'system' 
-                            ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' 
-                            : 'text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        <ComputerDesktopIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                        System
-                      </button>
-                    </div>
-                  )}
-                </div>
-                
-                <button
-                  className="flex w-full items-center px-4 py-3 text-base nike-text-primary dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200 rounded-md mt-4"
-                  onClick={handleSignOut}
-                >
-                  <ArrowRightOnRectangleIcon className="mr-4 h-6 w-6 text-brand-300" />
-                  Sign out
-                </button>
+                {/* Dark mode toggle and sign-out button removed from mobile menu */}
               </div>
             </div>
           </div>

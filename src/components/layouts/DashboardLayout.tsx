@@ -192,27 +192,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const handleSignOut = async () => {
     try {
-      // Use the current origin to avoid CORS issues
-      const response = await fetch(`${window.location.origin}/auth/sign-out`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      // First try client-side signout which is more reliable
+      await supabase.auth.signOut()
       
-      if (response.ok) {
-        // Use the current origin for redirection
-        window.location.href = `${window.location.origin}/login`
-      } else {
-        console.error('Sign out failed:', await response.text())
-        // Fallback to client-side signOut
-        await supabase.auth.signOut()
-        window.location.href = `${window.location.origin}/login`
-      }
+      // Then redirect to login page
+      window.location.href = `${window.location.origin}/login`
     } catch (error) {
       console.error('Sign out error:', error)
-      // Fallback to client-side signOut
-      await supabase.auth.signOut()
+      // Still try to redirect even if there's an error
       window.location.href = `${window.location.origin}/login`
     }
   }

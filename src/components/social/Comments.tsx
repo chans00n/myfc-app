@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useComments, Comment } from '@/hooks/useComments'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/components/providers/auth-provider'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'

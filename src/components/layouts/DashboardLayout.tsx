@@ -72,6 +72,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const getUser = async () => {
       setIsLoading(true)
       try {
+        console.log('Fetching user data...')
         const { data: { user }, error: userError } = await supabase.auth.getUser()
         
         if (userError) {
@@ -83,10 +84,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             full_name: 'Dev User',
             avatar_url: null
           })
+          setIsLoading(false)
           return
         }
         
         if (user) {
+          console.log('Auth user found:', user.id)
           try {
             const { data: profile, error: profileError } = await supabase
               .from('profiles')
@@ -97,12 +100,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             if (profileError) {
               console.error('Error fetching profile:', profileError)
               // Use user metadata if profile fetch fails
-              setUser({
+              const userData = {
                 ...user,
                 full_name: user.user_metadata?.full_name || 'User',
                 avatar_url: user.user_metadata?.avatar_url || null
-              })
+              }
+              console.log('Using auth user data:', userData)
+              setUser(userData)
             } else {
+              console.log('User profile found:', profile)
               setUser({ ...user, ...profile })
             }
           } catch (err) {
@@ -110,6 +116,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             setUser(user)
           }
         } else {
+          console.log('No auth user found, using mock user')
           // Create a mock user for development
           setUser({
             id: 'mock-user-id',
@@ -137,7 +144,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state changed:', event)
         if (event === 'SIGNED_IN' && session?.user) {
+          console.log('User signed in:', session.user.id)
           try {
             const { data: profile, error: profileError } = await supabase
               .from('profiles')
@@ -147,12 +156,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             
             if (profileError) {
               console.error('Error fetching profile on auth change:', profileError)
-              setUser({
+              const userData = {
                 ...session.user,
                 full_name: session.user.user_metadata?.full_name || 'User',
                 avatar_url: session.user.user_metadata?.avatar_url || null
-              })
+              }
+              console.log('Using auth user data on sign in:', userData)
+              setUser(userData)
             } else {
+              console.log('User profile found on sign in:', profile)
               setUser({ ...session.user, ...profile })
             }
           } catch (err) {
@@ -160,6 +172,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             setUser(session.user)
           }
         } else if (event === 'SIGNED_OUT') {
+          console.log('User signed out')
           // Create a mock user for development
           setUser({
             id: 'mock-user-id',

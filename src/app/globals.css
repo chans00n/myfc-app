@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand colors */
+    --brand-50: #f9f9f9;
+    --brand-100: #f0f0f0;
+    --brand-200: #e0e0e0;
+    --brand-300: #FF0000;
+    --brand-400: #E00000;
+    --brand-500: #CC0000;
+    --brand-600: #B80000;
+    --brand-700: #A30000;
+    --brand-800: #8F0000;
+    --brand-900: #7A0000;
+    --brand-950: #660000;
+    
+    /* Surface colors */
+    --surface-light: #FFFFFF;
+    --surface-dark: #000000;
+    --surface-muted: #F5F5F5;
+    
+    /* Text colors - Nike-inspired approach with #262626 as primary */
+    --text-primary: #262626;
+    --text-secondary: #555555;
+    --text-muted: #717171;
+    --text-inverted: #FFFFFF;
+    
+    /* Background colors */
+    --background-light: #FFFFFF;
+    --background-dark: #000000;
+  }
+  
+  .dark {
+    /* Adjust surface colors for dark mode */
+    --surface-light: #000000;
+    --surface-dark: #111111;
+    --surface-muted: #222222;
+    
+    /* Adjust text colors for dark mode */
+    --text-primary: #FFFFFF;
+    --text-secondary: #CCCCCC;
+    --text-muted: #999999;
+    --text-inverted: #000000;
+    
+    /* Adjust background colors for dark mode */
+    --background-light: #000000;
+    --background-dark: #111111;
+  }
+  
+  /* Apply the background color to the body */
+  body {
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Dark mode body styles */
+  .dark body {
+    background-color: var(--background-dark);
+  }
+
+  /* Nike-inspired typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  /* Ensure all text elements use the primary color by default */
+  p, span, div, a, button, input, textarea, select {
+    color: var(--text-primary);
+  }
+}
+
+/* Additional global styles */
+@layer components {
+  /* Nike-inspired button styles */
+  .btn-minimal {
+    @apply px-4 py-2 border-0 bg-transparent text-[#262626] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors uppercase font-bold;
+  }
+  
+  .btn-accent {
+    @apply px-4 py-2 bg-brand-300 text-white hover:bg-brand-400 transition-colors uppercase font-bold;
+  }
+  
+  /* Nike-inspired card styles */
+  .card-minimal {
+    @apply bg-white dark:bg-black border-0 shadow-sm p-4;
+  }
+  
+  /* Nike-inspired input styles */
+  .input-minimal {
+    @apply bg-transparent border-b border-gray-300 dark:border-gray-700 px-0 py-2 focus:border-brand-300 focus:ring-0 transition-colors;
+  }
+
+  /* Nike-inspired container */
+  .nike-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Nike-inspired section */
+  .nike-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  /* Nike-inspired text colors */
+  .text-nike-primary {
+    @apply text-[#262626] dark:text-white;
+  }
+  
+  .text-nike-secondary {
+    @apply text-[#555555] dark:text-[#CCCCCC];
+  }
+  
+  .text-nike-muted {
+    @apply text-[#717171] dark:text-[#999999];
+  }
+}

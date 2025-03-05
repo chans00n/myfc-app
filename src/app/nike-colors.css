@@ -1,0 +1,103 @@
+/**
+ * Nike-inspired Color System
+ * 
+ * This file provides utility classes for implementing Nike's minimalist
+ * black, white, and grayscale approach with limited accent color usage.
+ * 
+ * Primary text color in light mode is #262626
+ * Accent color is #D9E25C (Lime green)
+ */
+
+/* Text colors */
+.nike-text-primary {
+  color: #262626 !important;
+}
+
+.dark .nike-text-primary {
+  color: #FFFFFF !important;
+}
+
+.nike-text-secondary {
+  color: #555555 !important;
+}
+
+.dark .nike-text-secondary {
+  color: #CCCCCC !important;
+}
+
+.nike-text-muted {
+  color: #717171 !important;
+}
+
+.dark .nike-text-muted {
+  color: #999999 !important;
+}
+
+.nike-text-accent {
+  color: #D9E25C !important;
+}
+
+/* Background colors */
+.nike-bg-white {
+  background-color: #FFFFFF !important;
+}
+
+.dark .nike-bg-white {
+  background-color: #000000 !important;
+}
+
+.nike-bg-light {
+  background-color: #F5F5F5 !important;
+}
+
+.dark .nike-bg-light {
+  background-color: #171717 !important;
+}
+
+.nike-bg-accent {
+  background-color: #D9E25C !important;
+}
+
+/* Border colors */
+.nike-border {
+  border-color: #E5E5E5 !important;
+}
+
+.dark .nike-border {
+  border-color: #333333 !important;
+}
+
+.nike-border-accent {
+  border-color: #D9E25C !important;
+}
+
+/* Hover states */
+.nike-hover-bg:hover {
+  background-color: #F5F5F5 !important;
+}
+
+.dark .nike-hover-bg:hover {
+  background-color: #171717 !important;
+}
+
+.nike-hover-text:hover {
+  color: #D9E25C !important;
+}
+
+/* Active states */
+.nike-active-bg {
+  background-color: #F5F5F5 !important;
+}
+
+.dark .nike-active-bg {
+  background-color: #171717 !important;
+}
+
+.nike-active-text {
+  color: #D9E25C !important;
+}
+
+/* Transitions */
+.nike-transition {
+  transition: all 0.2s ease-in-out;
+} 

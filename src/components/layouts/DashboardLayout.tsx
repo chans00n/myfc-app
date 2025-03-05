@@ -354,6 +354,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     </div>
                   )}
                 </div>
+                
+                {/* Mobile profile section */}
+                <div className="flex items-center mt-4 mb-2">
+                  <div>
+                    <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium nike-text-primary dark:text-white">
+                      {user?.full_name || 'User'}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {user?.email || 'user@example.com'}
+                    </p>
+                  </div>
+                </div>
+                
                 <button
                   className="flex w-full items-center px-4 py-3 text-base nike-text-primary dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors duration-200 rounded-md mt-2"
                   onClick={handleSignOut}
@@ -420,24 +436,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 )
               })}
             </nav>
-          </div>
-          <div className="flex flex-shrink-0 border-t border-gray-200 dark:border-gray-800 p-4">
-            <div className="flex items-center">
-              <div>
-                <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium nike-text-primary dark:text-white">
-                  {user?.full_name || 'User'}
-                </p>
-                <button
-                  className="text-xs nike-text-secondary dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400"
-                  onClick={handleSignOut}
-                >
-                  Sign out
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -517,8 +515,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 )}
               </div>
               
-              {/* Profile dropdown */}
-              <div className="relative ml-4">
+              {/* Profile dropdown - visible only on desktop */}
+              <div className="relative ml-4 hidden md:block">
                 <button
                   type="button"
                   className="flex items-center rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

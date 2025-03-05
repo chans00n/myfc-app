@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useTheme } from '@/contexts/ThemeContext'
 import Image from 'next/image'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
@@ -81,6 +82,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         
         if (user) {
           try {
+            // Log the user object to debug
+            console.log('Auth user:', user)
+            
             const { data: profile, error: profileError } = await supabase
               .from('profiles')
               .select('*')
@@ -96,7 +100,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 avatar_url: user.user_metadata?.avatar_url || null
               })
             } else {
-              setUser({ ...user, ...profile })
+              // Log the profile to debug
+              console.log('User profile:', profile)
+              
+              setUser({
+                ...user,
+                ...profile,
+                // Ensure avatar_url is properly set from the profile
+                full_name: profile.display_name || user.user_metadata?.full_name || 'User',
+                avatar_url: profile.avatar_url || user.user_metadata?.avatar_url || null
+              })
             }
           } catch (err) {
             console.error('Error in profile fetch:', err)
@@ -404,7 +417,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="hidden md:flex flex-shrink-0 border-t border-gray-200 dark:border-gray-800 p-4">
             <div className="flex items-center">
               <div>
-                <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+                {user?.avatar_url ? (
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.avatar_url} alt={user?.full_name || 'User'} />
+                    <AvatarFallback>{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+                )}
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium nike-text-primary dark:text-white">
@@ -505,7 +525,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                 >
                   <span className="sr-only">Open user menu</span>
-                  <UserCircleIcon className="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                  {user?.avatar_url ? (
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.avatar_url} alt={user?.full_name || 'User'} />
+                      <AvatarFallback>{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                    </Avatar>
+                  ) : (
+                    <UserCircleIcon className="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                  )}
                 </button>
                 
                 {profileMenuOpen && (

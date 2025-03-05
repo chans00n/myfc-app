@@ -440,30 +440,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               })}
             </nav>
           </div>
-          <div className="flex flex-shrink-0 border-t border-gray-200 dark:border-gray-800 p-4">
-            <div className="flex items-center">
-              <div>
-                <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium nike-text-primary dark:text-white">
-                  {user?.full_name || 'User'}
-                </p>
-                <button
-                  className="text-xs nike-text-secondary dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400"
-                  onClick={handleSignOut}
-                >
-                  Sign out
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Remove the regular profile section that doesn't have a dropdown */}
           {/* Desktop profile section - visible only on desktop */}
           <div className="hidden md:flex flex-shrink-0 border-t border-gray-200 dark:border-gray-800 p-4">
             <div className="flex items-center relative">
               <button
                 onClick={() => setDesktopProfileMenuOpen(!desktopProfileMenuOpen)}
-                className="flex items-center focus:outline-none"
+                className="flex items-center focus:outline-none w-full"
               >
                 <div>
                   {user?.avatar_url ? (
@@ -475,7 +458,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
                   )}
                 </div>
-                <div className="ml-3">
+                <div className="ml-3 text-left">
                   <p className="text-sm font-medium nike-text-primary dark:text-white">
                     {user?.full_name || 'User'}
                   </p>
@@ -484,7 +467,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   </p>
                 </div>
                 <ChevronUpIcon 
-                  className={`ml-2 h-5 w-5 text-gray-400 transition-transform duration-200 ${desktopProfileMenuOpen ? '' : 'rotate-180'}`} 
+                  className={`ml-auto h-5 w-5 text-gray-400 transition-transform duration-200 ${desktopProfileMenuOpen ? '' : 'rotate-180'}`} 
                 />
               </button>
               
@@ -493,20 +476,20 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   ref={desktopProfileMenuRef}
                   className="absolute bottom-full left-0 mb-2 w-48 origin-bottom-left rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 >
-                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
+                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 text-left">
                     <div className="font-medium">{user?.full_name || 'User'}</div>
                     <div className="truncate">{user?.email || 'user@example.com'}</div>
                   </div>
                   <Link
                     href={getHrefWithTheme('/settings')}
-                    className="flex items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200"
+                    className="flex items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200 text-left"
                     role="menuitem"
                   >
                     <Cog6ToothIcon className="mr-3 h-5 w-5 text-brand-300" />
                     Settings
                   </Link>
                   <button
-                    className="flex w-full items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200"
+                    className="flex w-full items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200 text-left"
                     role="menuitem"
                     onClick={handleSignOut}
                   >
@@ -595,45 +578,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 )}
               </div>
               
-              {/* Profile dropdown */}
-              <div className="relative ml-4">
-                <button
-                  type="button"
-                  className="flex items-center rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <UserCircleIcon className="h-8 w-8 text-gray-400 dark:text-gray-500" />
-                </button>
-                
-                {profileMenuOpen && (
-                  <div
-                    ref={profileMenuRef}
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  >
-                    <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
-                      <div className="font-medium">{user?.full_name || 'User'}</div>
-                      <div className="truncate">{user?.email || 'user@example.com'}</div>
-                    </div>
-                    <Link
-                      href={getHrefWithTheme('/settings')}
-                      className="flex items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200"
-                      role="menuitem"
-                    >
-                      <Cog6ToothIcon className="mr-3 h-5 w-5 text-brand-300" />
-                      Settings
-                    </Link>
-                    <button
-                      className="flex w-full items-center px-4 py-2 text-sm nike-text-primary dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-200"
-                      role="menuitem"
-                      onClick={handleSignOut}
-                    >
-                      <ArrowRightOnRectangleIcon className="mr-3 h-5 w-5 text-brand-300" />
-                      Sign out
-                    </button>
-                  </div>
-                )}
-              </div>
               {/* Profile dropdown - visible ONLY on mobile */}
               <div className="relative ml-4 md:hidden">
                 <button

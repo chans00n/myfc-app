@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe/config'
 import { handleWebhook } from '@/lib/stripe/utils'
 
+// Webhook handler for Stripe events
 export async function POST(req: Request) {
   const body = await req.text()
   const headersList = await headers()

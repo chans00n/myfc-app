@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { CheckIcon } from '@heroicons/react/20/solid'
 import { SUBSCRIPTION_PLANS } from '@/lib/stripe/config'
 import { formatPrice } from '@/lib/utils'
 import { useState, useEffect } from 'react'

@@ -32,7 +32,7 @@ export default function ProgressPage() {
   const {
     isLoading: progressLoading,
     error: progressError,
-    progressMetrics,
+    progressData,
     workoutHistory,
     streak,
     refreshData,
@@ -70,18 +70,18 @@ export default function ProgressPage() {
   const getMetricData = () => {
     const metrics: Record<string, any[]> = {}
     
-    if (!progressMetrics || !Array.isArray(progressMetrics)) {
+    if (!progressData || !Array.isArray(progressData)) {
       return metrics;
     }
     
-    progressMetrics.forEach(item => {
+    progressData.forEach(item => {
       if (!metrics[item.metric_name]) {
         metrics[item.metric_name] = []
       }
       
       metrics[item.metric_name].push({
         date: formatDate(item.recorded_at),
-        value: item.metric_value,
+        value: item.value,
         notes: item.notes,
       })
     })

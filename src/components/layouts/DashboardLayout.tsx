@@ -418,9 +418,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="flex items-center">
               <div>
                 {user?.avatar_url ? (
-                  <Avatar className="h-10 w-10">
+                  <Avatar className="h-10 w-10 rounded-[20%] overflow-hidden">
                     <AvatarImage src={user.avatar_url} alt={user?.full_name || 'User'} />
-                    <AvatarFallback>{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                    <AvatarFallback className="rounded-[20%]">{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
                   </Avatar>
                 ) : (
                   <UserCircleIcon className="h-10 w-10 text-gray-400 dark:text-gray-500" />
@@ -526,9 +526,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 >
                   <span className="sr-only">Open user menu</span>
                   {user?.avatar_url ? (
-                    <Avatar className="h-8 w-8">
+                    <Avatar className="h-8 w-8 rounded-[20%] overflow-hidden">
                       <AvatarImage src={user.avatar_url} alt={user?.full_name || 'User'} />
-                      <AvatarFallback>{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                      <AvatarFallback className="rounded-[20%]">{user?.full_name?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
                     </Avatar>
                   ) : (
                     <UserCircleIcon className="h-8 w-8 text-gray-400 dark:text-gray-500" />

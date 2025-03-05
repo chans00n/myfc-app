@@ -9,7 +9,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export default function NotificationSettings() {
+// Define a local interface for our component's preferences
+interface NotificationPreferencesData {
+  workout_reminders?: boolean;
+  achievement_notifications?: boolean;
+  social_notifications?: boolean;
+  email_notifications?: boolean;
+  push_enabled?: boolean;
+  reminder_time?: string | null;
+}
+
+interface NotificationSettingsProps {
+  initialData?: {
+    email_notifications?: boolean;
+    push_notifications?: boolean;
+  }
+}
+
+export default function NotificationSettings({ initialData }: NotificationSettingsProps) {
   const {
     preferences,
     isLoading,
@@ -19,6 +36,17 @@ export default function NotificationSettings() {
   } = useNotifications()
   
   const [isSaving, setIsSaving] = useState(false)
+  
+  // Use initialData if provided and preferences are not yet loaded
+  const mergedPreferences: NotificationPreferencesData = { ...(preferences || {}) };
+  if (initialData && !preferences) {
+    if (initialData.email_notifications !== undefined) {
+      mergedPreferences.email_notifications = initialData.email_notifications;
+    }
+    if (initialData.push_notifications !== undefined) {
+      mergedPreferences.push_enabled = initialData.push_notifications;
+    }
+  }
   
   const handleToggleChange = async (field: string, value: boolean) => {
     if (!preferences) return
@@ -40,7 +68,7 @@ export default function NotificationSettings() {
     await requestNotificationPermission()
   }
   
-  if (isLoading) {
+  if (isLoading && !initialData) {
     return (
       <Card>
         <CardHeader>
@@ -59,7 +87,7 @@ export default function NotificationSettings() {
     )
   }
   
-  if (error || !preferences) {
+  if (error && !initialData) {
     return (
       <Card>
         <CardHeader>
@@ -93,6 +121,18 @@ export default function NotificationSettings() {
     }
   }
   
+  // Use merged preferences or fallback to defaults
+  const displayPreferences: NotificationPreferencesData = {
+    ...(preferences || {}),
+    ...mergedPreferences,
+    workout_reminders: (preferences?.workout_reminders || mergedPreferences.workout_reminders || false),
+    achievement_notifications: (preferences?.achievement_notifications || mergedPreferences.achievement_notifications || false),
+    social_notifications: (preferences?.social_notifications || mergedPreferences.social_notifications || false),
+    email_notifications: (preferences?.email_notifications || mergedPreferences.email_notifications || initialData?.email_notifications || false),
+    push_enabled: (preferences?.push_enabled || mergedPreferences.push_enabled || initialData?.push_notifications || false),
+    reminder_time: (preferences?.reminder_time || mergedPreferences.reminder_time || '18:00')
+  }
+  
   return (
     <Card>
       <CardHeader>
@@ -114,19 +154,19 @@ export default function NotificationSettings() {
             </div>
             <Switch
               id="workout-reminders"
-              checked={preferences.workout_reminders}
+              checked={displayPreferences.workout_reminders || false}
               onCheckedChange={(checked: boolean) => handleToggleChange('workout_reminders', checked)}
               disabled={isSaving}
             />
           </div>
           
-          {preferences.workout_reminders && (
+          {displayPreferences.workout_reminders && (
             <div className="ml-6 border-l-2 pl-4 border-muted">
               <Label htmlFor="reminder-time" className="mb-2 block">
                 Default Reminder Time
               </Label>
               <Select
-                value={preferences.reminder_time || '18:00'}
+                value={displayPreferences.reminder_time || '18:00'}
                 onValueChange={handleTimeChange}
                 disabled={isSaving}
               >
@@ -159,7 +199,7 @@ export default function NotificationSettings() {
           </div>
           <Switch
             id="achievement-notifications"
-            checked={preferences.achievement_notifications}
+            checked={displayPreferences.achievement_notifications || false}
             onCheckedChange={(checked: boolean) => handleToggleChange('achievement_notifications', checked)}
             disabled={isSaving}
           />
@@ -176,7 +216,7 @@ export default function NotificationSettings() {
           </div>
           <Switch
             id="social-notifications"
-            checked={preferences.social_notifications}
+            checked={displayPreferences.social_notifications || false}
             onCheckedChange={(checked: boolean) => handleToggleChange('social_notifications', checked)}
             disabled={isSaving}
           />
@@ -193,7 +233,7 @@ export default function NotificationSettings() {
           </div>
           <Switch
             id="email-notifications"
-            checked={preferences.email_notifications}
+            checked={displayPreferences.email_notifications || false}
             onCheckedChange={(checked: boolean) => handleToggleChange('email_notifications', checked)}
             disabled={isSaving}
           />
@@ -208,12 +248,12 @@ export default function NotificationSettings() {
               </p>
             </div>
             <Switch
-              checked={preferences.push_enabled}
+              checked={displayPreferences.push_enabled || false}
               disabled={true}
             />
           </div>
           
-          {!preferences.push_enabled ? (
+          {!(displayPreferences.push_enabled || false) ? (
             <Button onClick={handleEnablePush} className="w-full">
               Enable Push Notifications
             </Button>

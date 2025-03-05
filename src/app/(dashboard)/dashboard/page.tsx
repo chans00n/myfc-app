@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import DashboardLayout from '@/components/layouts/DashboardLayout'
+import DashboardLayoutWrapper from '@/components/layouts/DashboardLayoutWrapper'
 import WorkoutRecommendations from '@/components/workouts/WorkoutRecommendations'
 import { useProgress } from '@/hooks/useProgress'
 import { useAchievements } from '@/hooks/useAchievements'
@@ -46,7 +46,7 @@ export default function DashboardPage() {
   const isLoading = progressLoading || achievementsLoading
   
   return (
-    <DashboardLayout>
+    <DashboardLayoutWrapper>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{greeting}!</h1>
         
@@ -189,7 +189,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutWrapper>
   )
 }
 

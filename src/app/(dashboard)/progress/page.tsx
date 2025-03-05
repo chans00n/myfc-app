@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useProgress } from '@/hooks/useProgress'
 import { useAchievements } from '@/hooks/useAchievements'
-import DashboardLayout from '@/components/layouts/DashboardLayout'
+import DashboardLayoutWrapper from '@/components/layouts/DashboardLayoutWrapper'
 import {
   LineChart,
   Line,
@@ -146,7 +146,7 @@ export default function ProgressPage() {
 
   if (isLoading) {
     return (
-      <DashboardLayout>
+      <DashboardLayoutWrapper>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse space-y-8">
             <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
@@ -159,19 +159,19 @@ export default function ProgressPage() {
             <div className="h-96 bg-gray-200 dark:bg-gray-700 rounded"></div>
           </div>
         </div>
-      </DashboardLayout>
+      </DashboardLayoutWrapper>
     )
   }
 
   if (error) {
     return (
-      <DashboardLayout>
+      <DashboardLayoutWrapper>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-red-50 dark:bg-red-900 p-4 rounded-md">
             <p className="text-red-700 dark:text-red-200">{error}</p>
           </div>
         </div>
-      </DashboardLayout>
+      </DashboardLayoutWrapper>
     )
   }
 
@@ -180,7 +180,7 @@ export default function ProgressPage() {
   const metricData = getMetricData()
 
   return (
-    <DashboardLayout>
+    <DashboardLayoutWrapper>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Progress Dashboard</h1>
         
@@ -581,6 +581,6 @@ export default function ProgressPage() {
           )}
         </div>
       </div>
-    </DashboardLayout>
+    </DashboardLayoutWrapper>
   )
 } 

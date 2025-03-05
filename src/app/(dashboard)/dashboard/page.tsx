@@ -139,7 +139,7 @@ export default function DashboardPage() {
                   <span className="font-medium text-gray-900 dark:text-white">View Progress</span>
                 </Link>
                 <Link 
-                  href="/profile" 
+                  href="/settings" 
                   className="flex items-center justify-center p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   <span className="font-medium text-gray-900 dark:text-white">Update Profile</span>

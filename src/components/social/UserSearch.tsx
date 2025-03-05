@@ -62,7 +62,7 @@ export function UserSearch() {
         <div className="mt-4 space-y-3">
           {searchResults.map(user => (
             <div key={user.id} className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm border border-gray-100">
-              <Link href={`/profile/${user.username}`} className="flex items-center space-x-3 flex-1">
+              <Link href={`/social?username=${user.username}`} className="flex items-center space-x-3 flex-1">
                 <Avatar className="h-10 w-10">
                   {user.avatar_url ? (
                     <AvatarImage src={user.avatar_url} alt={user.display_name} />

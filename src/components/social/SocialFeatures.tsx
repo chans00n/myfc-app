@@ -236,7 +236,7 @@ export default function SocialFeatures({ currentUser, achievements }: SocialFeat
                     key={achievement.id}
                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
                   >
-                    {achievement.icon} {achievement.title}
+                    {achievement.icon && achievement.icon} {achievement.title || achievement.name}
                   </span>
                 ))}
               </div>

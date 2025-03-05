@@ -9,6 +9,8 @@ export interface Achievement {
   category: 'streak' | 'duration' | 'difficulty' | 'variety'
   requirement: number
   reward_points: number
+  icon?: React.ReactNode
+  title?: string
 }
 
 interface WorkoutStats {

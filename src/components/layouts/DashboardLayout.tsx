@@ -517,8 +517,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 )}
               </div>
               
-              {/* Profile dropdown - visible on both mobile and desktop */}
-              <div className="relative ml-4">
+              {/* Profile dropdown - visible ONLY on mobile */}
+              <div className="relative ml-4 md:hidden">
                 <button
                   type="button"
                   className="flex items-center rounded-full bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

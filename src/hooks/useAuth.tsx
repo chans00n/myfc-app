@@ -176,27 +176,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
-      // Use the server-side sign-out route
-      const response = await fetch('/auth/sign-out', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      // Clear user state first
+      setUser(null)
       
-      if (response.ok) {
-        // The server will handle the redirect, but we can also force it here
-        window.location.href = '/login'
-      } else {
-        // Fallback to client-side signOut if server route fails
-        await supabase.auth.signOut()
-        setUser(null)
+      // Client-side signOut
+      const { error } = await supabase.auth.signOut()
+      
+      if (error) {
+        console.error('Sign out error:', error)
       }
+      
+      // Force redirect to login page
+      window.location.href = '/login'
     } catch (error) {
       console.error('Sign out error:', error)
-      // Fallback to client-side signOut
-      await supabase.auth.signOut()
-      setUser(null)
+      // Still try to redirect even if there's an error
+      window.location.href = '/login'
     }
   }
 

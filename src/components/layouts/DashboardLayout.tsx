@@ -73,13 +73,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         
         if (userError) {
           console.error('Error fetching user:', userError)
-          // Create a mock user for development
-          setUser({
-            id: 'mock-user-id',
-            email: 'dev@example.com',
-            full_name: 'Dev User',
-            avatar_url: null
-          })
+          setUser(null)
+          // Redirect to login if not authenticated
+          window.location.href = `${window.location.origin}/login`
           return
         }
         
@@ -107,23 +103,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             setUser(user)
           }
         } else {
-          // Create a mock user for development
-          setUser({
-            id: 'mock-user-id',
-            email: 'dev@example.com',
-            full_name: 'Dev User',
-            avatar_url: null
-          })
+          // Redirect to login if not authenticated
+          window.location.href = `${window.location.origin}/login`
         }
       } catch (err) {
         console.error('Error in auth flow:', err)
-        // Create a mock user for development
-        setUser({
-          id: 'mock-user-id',
-          email: 'dev@example.com',
-          full_name: 'Dev User',
-          avatar_url: null
-        })
+        setUser(null)
+        // Redirect to login if not authenticated
+        window.location.href = `${window.location.origin}/login`
       } finally {
         setIsLoading(false)
       }
@@ -157,13 +144,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             setUser(session.user)
           }
         } else if (event === 'SIGNED_OUT') {
-          // Create a mock user for development
-          setUser({
-            id: 'mock-user-id',
-            email: 'dev@example.com',
-            full_name: 'Dev User',
-            avatar_url: null
-          })
+          setUser(null)
+          // Redirect to login when signed out
+          window.location.href = `${window.location.origin}/login`
         }
       }
     )
@@ -192,10 +175,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const handleSignOut = async () => {
     try {
-      // First try client-side signout which is more reliable
-      await supabase.auth.signOut()
+      // Clear local user state first
+      setUser(null)
       
-      // Then redirect to login page
+      // Sign out from Supabase
+      const { error } = await supabase.auth.signOut()
+      
+      if (error) {
+        console.error('Sign out error:', error)
+      }
+      
+      // Force redirect to login page
       window.location.href = `${window.location.origin}/login`
     } catch (error) {
       console.error('Sign out error:', error)
